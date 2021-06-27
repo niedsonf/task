@@ -12,21 +12,74 @@ class Bd {
         return parseInt(proximoId) + 1
     }
 
-    gravar(d) {
+    gravar(item) {
         let id = this.getProximoId()
 
-        localStorage.setItem(id, JSON.stringify(d))
+        localStorage.setItem(id, JSON.stringify(item))
 
         localStorage.setItem('id', id)
+    }
+
+    recuperarDados() {
+        let lembretes = Array()
+        let id = localStorage.getItem('id')
+
+        for(let i = 1; i <= id; i++) {
+            let lembrete = JSON.parse(localStorage.getItem(i))
+
+            if(lembrete === null)
+                continue
+            
+            lembrete.id = i
+            lembretes.push(lembrete)
+        }
+
+        return lembretes
+    }
+
+    remover(id) {
+        localStorage.removeItem(id)
     }
 }
 
 let bd = new Bd()
 
-class Lembrete {
+class Card {
     constructor(assunto, descricao) {
         this.assunto = assunto
         this.descricao = descricao
+    }
+
+    criarDOM(id){
+        let divExterna = document.createElement('div')
+        divExterna.className = 'card col-12 col-lg-5 mb-2 me-2'
+        let cardHeader = document.createElement('div')
+        cardHeader.className = 'card-header d-flex justify-content-between align-items-center'
+        let cardBody = document.createElement('div')
+        cardBody.className = 'card-body'
+        let cardTitle = document.createElement('h3')
+        cardTitle.className = 'card-title display-6 fs-4'
+        cardTitle.innerHTML = this.assunto
+        let cardText = document.createElement('h4')
+        cardText.className = 'card-text fs-5'
+        cardText.innerHTML = this.descricao
+        let btn = document.createElement('BUTTON')
+        btn.id = `lembrete_id_${id}`
+        btn.className = 'btn btn-danger'
+        btn.innerHTML = '<i class="bi bi-x-circle"></i>'
+        btn.onclick = function() {
+            let id = this.id.replace('lembrete_id_', '')
+            bd.remover(id)
+            window.location.reload()
+        }
+
+        divExterna.appendChild(cardHeader)
+        divExterna.appendChild(cardBody)
+        cardHeader.appendChild(cardTitle)
+        cardHeader.appendChild(btn)
+        cardBody.appendChild(cardText)
+        let mural = document.getElementById('mural')
+        mural.appendChild(divExterna)
     }
 
     validarDados() {
@@ -38,39 +91,15 @@ class Lembrete {
     }
 }
 
-class Card {
-    constructor(assunto, descricao) {
-        this.assunto = assunto
-        this.descricao = descricao
-    }
-    criarDOM(){
-        let divExterna = document.createElement('div')
-        divExterna.className = 'card col-3'
-        let cardBody = document.createElement('div')
-        cardBody.className = 'card-body'
-        let cardTitle = document.createElement('h3')
-        cardTitle.className = 'card-title'
-        cardTitle.innerHTML = this.assunto
-        let cardText = document.createElement('h4')
-        cardText.className = 'card-text'
-        cardText.innerHTML = this.descricao
-        divExterna.appendChild(cardBody)
-        cardBody.appendChild(cardTitle)
-        cardBody.appendChild(cardText)
-        let mural = document.getElementById('mural')
-        mural.appendChild(divExterna)
-    }
-}
-
 function cadastrar() {
     let assunto = document.getElementById('addModal_assunto')
     let descricao = document.getElementById('addModal_descricao')
     let statusModal = new bootstrap.Modal(document.getElementById('statusModal'))
     let addModal = new bootstrap.Modal(document.getElementById('addModal'))
 
-    let lembrete = new Lembrete(assunto.value, descricao.value)
+    let lembrete = new Card(assunto.value, descricao.value)
 
-    if (lembrete.validarDados()) {
+    if(lembrete.validarDados()) {
         document.getElementById('statusModal_titulo').innerHTML = 'Lembrete salvo com sucesso!'
         document.getElementById('statusModal_btn').innerHTML = 'Adicionar mais'
         bd.gravar(lembrete)
@@ -82,9 +111,16 @@ function cadastrar() {
     }
 
     statusModal.show()
+    carregarLembretes()
 }
 
-let id = JSON.parse(localStorage.getItem('1'))
-
-let nota = new Card(id.assunto, id.descricao)
-nota.criarDOM()
+function carregarLembretes() {
+    let mural = document.getElementById('mural')
+    mural.innerHTML = ''
+    let lembretes = Array()
+    lembretes = bd.recuperarDados()
+    lembretes.forEach(l => {
+        let lembrete = new Card(l.assunto, l.descricao)
+        lembrete.criarDOM(l.id);
+    })
+}

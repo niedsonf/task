@@ -12,16 +12,16 @@
     <title>TasK - Impulsione seu desempenho!</title>
 </head>
 
-<body>
+<body onload="carregarLembretes()">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-danger mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-danger mb-3">
             <div class="container">
                 <div class="d-flex flex-column">
                     <h1 class="align-self-center fs-3">TasK</h1>
-                    <h5>Impulsione seu desempenho!</h5>
+                    <h2>Impulsione seu desempenho!</h5>
                 </div>
 
-                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navegador">
+                <button class="navbar-toggler first-button" data-bs-toggle="collapse" data-bs-target="#navegador">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -47,7 +47,7 @@
 
     <section>
         <div class="container">
-            <div id="mural" class="row">
+            <div id="mural" class="d-flex flex-wrap col-lg-10">
             </div>
         </div>
     </section>

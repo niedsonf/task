@@ -2,11 +2,19 @@ html, body {
     background: #212529;
 }
 
-header h5 {
-    font-size: 12px;
+header h2 {
+    font-size: 14px;
 }
 
 
 header ul li {
     margin-left: 10px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-expand-lg .navbar-nav button {
+        display: inline;
+        margin: 3px 0 4px 0;
+        width: 100%;
+    }
 }
