@@ -14,7 +14,7 @@
 
 <body onload="carregarLembretes()">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-danger mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning mb-3">
             <div class="container">
                 <div class="d-flex flex-column">
                     <h1 class="align-self-center fs-3">TasK</h1>
@@ -28,13 +28,13 @@
                 <div class="collapse navbar-collapse" id="navegador">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <button class="btn btn-dark border-dark" data-bs-toggle="modal" data-bs-target="#addModal">
+                            <button class="btn btn-dark border-white" data-bs-toggle="modal" data-bs-target="#addModal">
                                 <i class="bi bi-file-earmark-plus"></i>
                                 <span>Adicionar lembrete</span>
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-dark border-dark">
+                            <button class="btn btn-dark border-white">
                                 <i class="bi bi-clock"></i>
                                 <span>Acessar horários</span>
                             </button>
@@ -52,22 +52,26 @@
         </div>
     </section>
 
-    <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade border-dark" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">O que lembrar?</h5>
+                <div class="modal-header bg-warning border-dark">
+                    <h5 class="modal-title display-6 fs-3">O que lembrar?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label for="addModal_assunto" class="mb-1">Assunto:</label>
-                    <textarea id="addModal_assunto" rows="2" class="form-control mb-3"></textarea>
-                    <label for="addModal_descricao" class="mb-1">Descrição:</label>
-                    <textarea id="addModal_descricao" rows="10" class="form-control"></textarea>
+                    <form>
+                        <label for="addModal_assunto" class="mb-1">Assunto:</label>
+                        <textarea id="addModal_assunto" rows="1" class="form-control mb-3"></textarea>
+                        <label for="addModal_descricao" class="mb-1">Descrição:</label>
+                        <textarea id="addModal_descricao" rows="8" class="form-control mb-3"></textarea>
+                        <label for="addModal_data" class="mb-1">Qual o prazo?</label>
+                        <input type="date" id="addModal_data" class="form-control">
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="cadastrar()" data-bs-dismiss="modal">Salvar
+                    <button type="button" class="btn btn-warning border-dark" onclick="cadastrar()" data-bs-dismiss="modal">Salvar
                         lembrete</button>
                 </div>
             </div>
@@ -78,12 +82,12 @@
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="statusModal_titulo"></h5>
+                <div id="statusModal_header">
+                    <h5 class="modal-title display-6 fs-3" id="statusModal_titulo"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal"
+                    <button data-bs-toggle="modal" data-bs-target="#addModal"
                         data-bs-dismiss="modal" id="statusModal_btn"></button>
                 </div>
             </div>
